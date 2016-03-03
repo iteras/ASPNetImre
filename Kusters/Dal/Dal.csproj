@@ -49,6 +49,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\ICampaignRepository.cs" />
+    <Compile Include="Interfaces\IChatRepository.cs" />
+    <Compile Include="Interfaces\IContractRepository.cs" />
+    <Compile Include="Interfaces\IDealRepository.cs" />
+    <Compile Include="Interfaces\IDescriptionRepository.cs" />
+    <Compile Include="Interfaces\IEFRepository.cs" />
+    <Compile Include="Interfaces\IPersonInChatRepository.cs" />
+    <Compile Include="Interfaces\IPersonInContractRepository.cs" />
+    <Compile Include="Interfaces\IPersonInDealRepository.cs" />
+    <Compile Include="Interfaces\IPersonInPretension.cs" />
+    <Compile Include="Interfaces\IPersonRepository.cs" />
+    <Compile Include="Interfaces\IPicturesRepository.cs" />
+    <Compile Include="Interfaces\IPretensionRepository.cs" />
+    <Compile Include="Interfaces\IProductRepository.cs" />
+    <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="KustersDbContext.cs" />
     <Compile Include="Migrations\201603032121528_initialMigration.cs" />
     <Compile Include="Migrations\201603032121528_initialMigration.Designer.cs">
@@ -56,6 +71,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\EFRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
