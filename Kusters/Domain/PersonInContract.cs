@@ -12,10 +12,10 @@ namespace Domain
         [Key]
        public int PersonInContractId { get; set; }
 
-        public int PersonId { get; set; }
+        //public int PersonId { get; set; }
        public virtual Person Person { get; set; } //maybe should put in List?
 
-       public int ContractId { get; set; }
+       //public int ContractId { get; set; }
         public virtual Contract Contract { get; set; }
 
         [MaxLength(32)]

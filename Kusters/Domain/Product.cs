@@ -12,19 +12,19 @@ namespace Domain
         [Key]
        public int ProductId { get; set; }
 
-       public int? PersonId { get; set; }
+       //public int PersonId { get; set; }
        public virtual Person Person { get; set; }
 
-       public int? PretensionId { get; set; }
+       //public int PretensionId { get; set; }
        public virtual List<Pretension> Pretensions { get; set; }
 
-       public int? PictureId { get; set; }
+       //public int PictureId { get; set; }
         public virtual List<Picture> Pictures { get; set; }
 
-       public int? DealId { get; set; }
+       //public int DealId { get; set; }
        public virtual List<Deal> Deals { get; set; }
 
-       public int? DescriptionId { get; set; }
+       //public int DescriptionId { get; set; }
        public virtual List<Description> Descriptions { get; set; }
 
 

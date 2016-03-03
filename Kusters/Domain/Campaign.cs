@@ -12,10 +12,10 @@ namespace Domain
         [Key]
        public int CampaignId { get; set; }
 
-       public int ContractId { get; set; }
+       //public int ContractId { get; set; }
        public virtual List<Contract> Contracts { get; set; }
 
-       public int DealId { get; set; }
+       //public int DealId { get; set; }
        public virtual List<Deal> Deals { get; set; }
 
        public double Percentage { get; set; }

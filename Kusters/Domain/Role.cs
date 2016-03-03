@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-   public class Type
+   public class Role
     {
         [Key]
-        public int TypeId { get; set; }
+        public int RoleId { get; set; }
 
-       public int PersonId { get; set; }
+       //public int PersonId { get; set; }
        public virtual List<Person> Persons { get; set; }
 
-       public int ChatId { get; set; }
+       //public int ChatId { get; set; }
        public virtual List<Chat> Chats { get; set; }
 
        //public virtual Person personId { get; set; }
-       public char IsType { get; set; }
+       public char IsRole { get; set; }
         [MaxLength(32)]
         public string From { get; set; }
         [MaxLength(32)]
