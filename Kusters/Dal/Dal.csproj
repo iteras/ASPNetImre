@@ -60,10 +60,12 @@
     <Compile Include="Interfaces\IPersonInDealRepository.cs" />
     <Compile Include="Interfaces\IPersonInPretension.cs" />
     <Compile Include="Interfaces\IPersonRepository.cs" />
-    <Compile Include="Interfaces\IPicturesRepository.cs" />
+    <Compile Include="Interfaces\IPictureRepository.cs" />
     <Compile Include="Interfaces\IPretensionRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />
+    <Compile Include="Repositories\PersonInDealRepository.cs" />
+    <Compile Include="Repositories\PersonInPretensionRepository.cs" />
     <Compile Include="KustersDbContext.cs" />
     <Compile Include="Migrations\201603032121528_initialMigration.cs" />
     <Compile Include="Migrations\201603032121528_initialMigration.Designer.cs">
@@ -71,7 +73,19 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CampaignRepository.cs" />
+    <Compile Include="Repositories\ChatRepository.cs" />
+    <Compile Include="Repositories\ContractRepository.cs" />
+    <Compile Include="Repositories\DealRepository.cs" />
+    <Compile Include="Repositories\DescriptionRepository.cs" />
     <Compile Include="Repositories\EFRepository.cs" />
+    <Compile Include="Repositories\PersonInChatRepository.cs" />
+    <Compile Include="Repositories\PersonInContractRepository.cs" />
+    <Compile Include="Repositories\PersonRepository.cs" />
+    <Compile Include="Repositories\PictureRepository.cs" />
+    <Compile Include="Repositories\PretensionRepository.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

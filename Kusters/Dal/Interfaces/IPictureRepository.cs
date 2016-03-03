@@ -8,7 +8,7 @@ using Domain;
 
 namespace Dal.Interfaces
 {
-    public interface IPicturesRepository : IEFRepository<Picture>
+    public interface IPictureRepository : IEFRepository<Picture>
     {
     }
 }
