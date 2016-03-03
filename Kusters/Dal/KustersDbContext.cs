@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,9 @@ namespace Dal
         public KustersDbContext() : base("DbConnectionString")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<KustersDbContext,MigrationConfiguration>());
+#if DEBUG
+            Database.Log = s => Trace.Write(s);
+#endif
         }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }

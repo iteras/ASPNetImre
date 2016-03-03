@@ -12,8 +12,8 @@ namespace Domain
         [Key]
        public int ContractId { get; set; }
 
-        //public int CampaignId { get; set; }
-       public virtual Campaign Campaign { get; set; }
+        public int CampaignId { get; set; }
+        public virtual Campaign Campaign { get; set; }
 
        //public int PersonInContractId { get; set; }
        public virtual List<PersonInContract> PersonsInContract { get; set; }
@@ -21,8 +21,7 @@ namespace Domain
        //public int DealId { get; set; }
        public virtual List<Deal> Deals { get; set; }
 
-       //public Person personId { get; set; }
-       public string Content { get; set; }
+        public string Content { get; set; }
         [MaxLength(128)]
        public string Title { get; set; }
 

@@ -12,17 +12,17 @@ namespace Domain
         [Key]
         public int ChatId { get; set; }
 
-       //public int TypeId { get; set; }
-       public virtual Role Role { get; set; }
+        public int TypeId { get; set; }
+        public virtual Role Role { get; set; }
 
-       //public int PersonId { get; set; }
-       public virtual Person Person { get; set; }
+        public int PersonId { get; set; }
+        public virtual Person Person { get; set; }
 
        //public int PersonInChatId { get; set; }
        public virtual List<PersonInChat> PersonsInChat { get; set; }
 
-       //public int PretensionId { get; set; }
-       public virtual Pretension Pretension { get; set; }
+        public int PretensionId { get; set; }
+        public virtual Pretension Pretension { get; set; }
 
         [MaxLength(255)]
        public string Message { get; set; }

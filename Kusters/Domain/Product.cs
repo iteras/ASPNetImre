@@ -12,8 +12,8 @@ namespace Domain
         [Key]
        public int ProductId { get; set; }
 
-       //public int PersonId { get; set; }
-       public virtual Person Person { get; set; }
+        public int PersonId { get; set; }
+        public virtual Person Person { get; set; }
 
        //public int PretensionId { get; set; }
        public virtual List<Pretension> Pretensions { get; set; }

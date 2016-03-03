@@ -12,11 +12,11 @@ namespace Domain
         [Key]
         public int PictureId { get; set; }
 
-       //public int ProductId { get; set; }
-       public virtual Product Product { get; set; }
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; }
 
-       //public int PersonId { get; set; }
-       public virtual Person  Person { get; set; }
+        public int PersonId { get; set; }
+        public virtual Person  Person { get; set; }
 
 
         [MaxLength(255)]

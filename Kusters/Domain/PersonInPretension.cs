@@ -12,11 +12,11 @@ namespace Domain
         [Key]
         public int PersonInPretensionId { get; set; }
 
-        //public int PretensionId { get; set; }
-       public virtual Pretension Pretension { get; set; }
+        public int PretensionId { get; set; }
+        public virtual Pretension Pretension { get; set; }
 
-       //public int PersonId { get; set; }
-       public virtual Person Person { get; set; }
+        public int PersonId { get; set; }
+        public virtual Person Person { get; set; }
 
         [MaxLength(32)]
         public string From { get; set; }

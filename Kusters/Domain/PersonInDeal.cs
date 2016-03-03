@@ -12,11 +12,11 @@ namespace Domain
         [Key]
         public int PersonInDealId { get; set; }
 
-       //public int PersonId { get; set; }
-       public virtual Person Person { get; set; }
+        public int PersonId { get; set; }
+        public virtual Person Person { get; set; }
 
-       //public int DealId { get; set; }
-       public virtual Deal Deal { get; set; }
+        public int DealId { get; set; }
+        public virtual Deal Deal { get; set; }
 
         [MaxLength(64)]
        public string Date { get; set; }

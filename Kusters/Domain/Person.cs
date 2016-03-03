@@ -13,7 +13,7 @@ namespace Domain
         [Key]
         public int PersonId { get; set; }
 
-        //public int TypeId { get; set; }
+        public int TypeId { get; set; }
         public virtual Role Role { get; set; }
 
         //public int ChatId { get; set; }

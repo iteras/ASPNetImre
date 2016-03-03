@@ -18,7 +18,9 @@ namespace Domain
        //public int ChatId { get; set; }
        public virtual List<Chat> Chats { get; set; }
 
-       //public virtual Person personId { get; set; }
+       //public int PersonId { get; set; }
+       //public virtual Person Person { get; set; }
+
        public char IsRole { get; set; }
         [MaxLength(32)]
         public string From { get; set; }
