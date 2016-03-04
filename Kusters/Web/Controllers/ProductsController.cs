@@ -7,18 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class ProductsController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
-
+        //private KustersDbContext db = new KustersDbContext();
+        private readonly IProductRepository _productRepository = new ProductRepository(new KustersDbContext());
         // GET: Products
         public ActionResult Index()
         {
-            return View(db.Products.ToList());
+            return View(_productRepository.All);
         }
 
         // GET: Products/Details/5
@@ -28,7 +30,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = _productRepository.GetById(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -51,8 +53,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Products.Add(product);
-                db.SaveChanges();
+                _productRepository.Update(product);
+                _productRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +68,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = _productRepository.GetById(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -83,8 +85,10 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
+                _productRepository.Update(product);
+                _productRepository.SaveChanges();
+                //db.Entry(product).State = EntityState.Modified;
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -97,7 +101,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = _productRepository.GetById();
             if (product == null)
             {
                 return HttpNotFound();
@@ -110,9 +114,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = db.Products.Find(id);
-            db.Products.Remove(product);
-            db.SaveChanges();
+            Product product = _productRepository.GetById();
+            _productRepository.Delete(product);
+            _productRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +124,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _productRepository.Dispose();
             }
             base.Dispose(disposing);
         }

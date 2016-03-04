@@ -15,7 +15,8 @@ namespace Dal
     {
         public KustersDbContext() : base("DbConnectionString")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<KustersDbContext,MigrationConfiguration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<KustersDbContext,MigrationConfiguration>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<KustersDbContext>());
 #if DEBUG
             Database.Log = s => Trace.Write(s);
 #endif
