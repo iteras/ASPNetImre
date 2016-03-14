@@ -16,7 +16,7 @@ namespace Domain
        public virtual List<Person> Persons { get; set; }
 
        //public int ChatId { get; set; }
-       public virtual List<Chat> Chats { get; set; }
+       //public virtual List<Chat> Chats { get; set; }
 
        //public int PersonId { get; set; }
        //public virtual Person Person { get; set; }

@@ -5,9 +5,9 @@ namespace Dal.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class MigrationConfiguration : DbMigrationsConfiguration<Dal.KustersDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Dal.KustersDbContext>
     {
-        public MigrationConfiguration()
+        public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }

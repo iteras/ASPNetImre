@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dal.Migrations;
 using Domain;
 
 
@@ -16,7 +15,7 @@ namespace Dal
         public KustersDbContext() : base("DbConnectionString")
         {
             //Database.SetInitializer(new MigrateDatabaseToLatestVersion<KustersDbContext,MigrationConfiguration>());
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<KustersDbContext>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<KustersDbContext>());
 #if DEBUG
             Database.Log = s => Trace.Write(s);
 #endif

@@ -51,8 +51,10 @@
   <ItemGroup>
     <Compile Include="Campaign.cs" />
     <Compile Include="Chat.cs" />
+    <Compile Include="ChatInPretension.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="Deal.cs" />
+    <Compile Include="DealInContract.cs" />
     <Compile Include="Description.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="PersonInChat.cs" />

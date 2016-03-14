@@ -13,23 +13,23 @@ namespace Domain
         [Key]
         public int PersonId { get; set; }
 
-        public int TypeId { get; set; }
+        public int RoleId { get; set; }
         public virtual Role Role { get; set; }
 
         //public int ChatId { get; set; }
-        public virtual List<Chat> Chats { get; set; }
+        //public virtual List<Chat> Chats { get; set; }
 
         //public int PersonInChatId { get; set; }
         public virtual List<PersonInChat> PersonsInChat { get; set; }
 
         //public int PretensionId { get; set; }
-        public virtual List<Pretension> Pretensions { get; set; }
+        //public virtual List<Pretension> Pretensions { get; set; }
 
         //public int PersonInPretensionId { get; set; }
         public virtual List<PersonInPretension> PersonsInPretension { get; set; }
 
         //public int PictureId { get; set; }
-        public virtual List<Picture> Pictures { get; set; }
+        //public virtual List<Picture> Pictures { get; set; }
 
         //public int PersonInDealId { get; set; }
         public virtual List<PersonInDeal> PersonsInDeal { get; set; }
