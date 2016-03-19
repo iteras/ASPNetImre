@@ -64,9 +64,9 @@
     <Compile Include="Interfaces\IPretensionRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />
-    <Compile Include="Migrations\201603041952481_initalmigration.cs" />
-    <Compile Include="Migrations\201603041952481_initalmigration.Designer.cs">
-      <DependentUpon>201603041952481_initalmigration.cs</DependentUpon>
+    <Compile Include="Migrations\201603161530370_KustersAddMigrations.cs" />
+    <Compile Include="Migrations\201603161530370_KustersAddMigrations.Designer.cs">
+      <DependentUpon>201603161530370_KustersAddMigrations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\PersonInDealRepository.cs" />
@@ -98,8 +98,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603041952481_initalmigration.resx">
-      <DependentUpon>201603041952481_initalmigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603161530370_KustersAddMigrations.resx">
+      <DependentUpon>201603161530370_KustersAddMigrations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

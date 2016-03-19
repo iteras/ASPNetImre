@@ -16,11 +16,13 @@ namespace Domain
         //public int DealInContractId { get; set; }
         public virtual List<DealInContract>   DealsInContract { get; set; }
 
-        public int? CampaignId { get; set; }
-        public virtual Campaign Campaign { get; set; }
+        //public int? CampaignId { get; set; }
+        //public virtual Campaign Campaign { get; set; }
 
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
+
+       public virtual List<DealInCampaign> DealInCampaign { get; set; }
 
        //public int PersonInDeal { get; set; }
        public virtual List<PersonInDeal> PersonsInDeal { get; set; }

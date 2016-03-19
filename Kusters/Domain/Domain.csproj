@@ -55,6 +55,7 @@
     <Compile Include="Contract.cs" />
     <Compile Include="Deal.cs" />
     <Compile Include="DealInContract.cs" />
+    <Compile Include="DealInCampaign.cs" />
     <Compile Include="Description.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="PersonInChat.cs" />

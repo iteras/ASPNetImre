@@ -3,7 +3,7 @@ namespace Dal.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initalmigration : DbMigration
+    public partial class KustersAddMigrations : DbMigration
     {
         public override void Up()
         {
@@ -23,12 +23,12 @@ namespace Dal.Migrations
                 c => new
                     {
                         ContractId = c.Int(nullable: false, identity: true),
-                        CampaignId = c.Int(nullable: false),
+                        CampaignId = c.Int(),
                         Content = c.String(),
                         Title = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.ContractId)
-                .ForeignKey("dbo.Campaigns", t => t.CampaignId, cascadeDelete: true)
+                .ForeignKey("dbo.Campaigns", t => t.CampaignId)
                 .Index(t => t.CampaignId);
             
             CreateTable(
@@ -36,12 +36,12 @@ namespace Dal.Migrations
                 c => new
                     {
                         DealInContractId = c.Int(nullable: false, identity: true),
-                        DealId = c.Int(nullable: false),
-                        ContractId = c.Int(nullable: false),
+                        DealId = c.Int(),
+                        ContractId = c.Int(),
                     })
                 .PrimaryKey(t => t.DealInContractId)
-                .ForeignKey("dbo.Contracts", t => t.ContractId, cascadeDelete: true)
-                .ForeignKey("dbo.Deals", t => t.DealId, cascadeDelete: true)
+                .ForeignKey("dbo.Contracts", t => t.ContractId)
+                .ForeignKey("dbo.Deals", t => t.DealId)
                 .Index(t => t.DealId)
                 .Index(t => t.ContractId);
             
@@ -50,30 +50,43 @@ namespace Dal.Migrations
                 c => new
                     {
                         DealId = c.Int(nullable: false, identity: true),
-                        CampaignId = c.Int(nullable: false),
                         ProductId = c.Int(nullable: false),
                         From = c.String(maxLength: 32),
                         Until = c.String(maxLength: 32),
                         DealDone = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.DealId)
-                .ForeignKey("dbo.Campaigns", t => t.CampaignId, cascadeDelete: true)
                 .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
-                .Index(t => t.CampaignId)
                 .Index(t => t.ProductId);
+            
+            CreateTable(
+                "dbo.DealInCampaigns",
+                c => new
+                    {
+                        DealInCampaignId = c.Int(nullable: false, identity: true),
+                        DealId = c.Int(),
+                        Deal = c.Int(nullable: false),
+                        CampaignId = c.Int(),
+                        Campaign = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.DealInCampaignId)
+                .ForeignKey("dbo.Deals", t => t.DealId)
+                .ForeignKey("dbo.Campaigns", t => t.CampaignId)
+                .Index(t => t.DealId)
+                .Index(t => t.CampaignId);
             
             CreateTable(
                 "dbo.PersonInDeals",
                 c => new
                     {
                         PersonInDealId = c.Int(nullable: false, identity: true),
-                        PersonId = c.Int(nullable: false),
-                        DealId = c.Int(nullable: false),
+                        PersonId = c.Int(),
+                        DealId = c.Int(),
                         Date = c.String(maxLength: 64),
                     })
                 .PrimaryKey(t => t.PersonInDealId)
-                .ForeignKey("dbo.Deals", t => t.DealId, cascadeDelete: true)
-                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
+                .ForeignKey("dbo.Deals", t => t.DealId)
+                .ForeignKey("dbo.People", t => t.PersonId)
                 .Index(t => t.PersonId)
                 .Index(t => t.DealId);
             
@@ -104,13 +117,13 @@ namespace Dal.Migrations
                 c => new
                     {
                         PersonInChatId = c.Int(nullable: false, identity: true),
-                        ChatId = c.Int(nullable: false),
-                        PersonId = c.Int(nullable: false),
+                        ChatId = c.Int(),
+                        PersonId = c.Int(),
                         Time = c.String(),
                     })
                 .PrimaryKey(t => t.PersonInChatId)
-                .ForeignKey("dbo.Chats", t => t.ChatId, cascadeDelete: true)
-                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
+                .ForeignKey("dbo.Chats", t => t.ChatId)
+                .ForeignKey("dbo.People", t => t.PersonId)
                 .Index(t => t.ChatId)
                 .Index(t => t.PersonId);
             
@@ -129,12 +142,12 @@ namespace Dal.Migrations
                 c => new
                     {
                         ChatInPretensionId = c.Int(nullable: false, identity: true),
-                        ChatId = c.Int(nullable: false),
-                        PretensionId = c.Int(nullable: false),
+                        ChatId = c.Int(),
+                        PretensionId = c.Int(),
                     })
                 .PrimaryKey(t => t.ChatInPretensionId)
-                .ForeignKey("dbo.Chats", t => t.ChatId, cascadeDelete: true)
-                .ForeignKey("dbo.Pretensions", t => t.PretensionId, cascadeDelete: true)
+                .ForeignKey("dbo.Chats", t => t.ChatId)
+                .ForeignKey("dbo.Pretensions", t => t.PretensionId)
                 .Index(t => t.ChatId)
                 .Index(t => t.PretensionId);
             
@@ -156,14 +169,14 @@ namespace Dal.Migrations
                 c => new
                     {
                         PersonInPretensionId = c.Int(nullable: false, identity: true),
-                        PretensionId = c.Int(nullable: false),
-                        PersonId = c.Int(nullable: false),
+                        PretensionId = c.Int(),
+                        PersonId = c.Int(),
                         From = c.String(maxLength: 32),
                         Until = c.String(maxLength: 32),
                     })
                 .PrimaryKey(t => t.PersonInPretensionId)
-                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
-                .ForeignKey("dbo.Pretensions", t => t.PretensionId, cascadeDelete: true)
+                .ForeignKey("dbo.People", t => t.PersonId)
+                .ForeignKey("dbo.Pretensions", t => t.PretensionId)
                 .Index(t => t.PretensionId)
                 .Index(t => t.PersonId);
             
@@ -213,14 +226,14 @@ namespace Dal.Migrations
                 c => new
                     {
                         PersonInContractId = c.Int(nullable: false, identity: true),
-                        PersonId = c.Int(nullable: false),
-                        ContractId = c.Int(nullable: false),
+                        PersonId = c.Int(),
+                        ContractId = c.Int(),
                         From = c.String(maxLength: 32),
                         Until = c.String(maxLength: 32),
                     })
                 .PrimaryKey(t => t.PersonInContractId)
-                .ForeignKey("dbo.Contracts", t => t.ContractId, cascadeDelete: true)
-                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
+                .ForeignKey("dbo.Contracts", t => t.ContractId)
+                .ForeignKey("dbo.People", t => t.PersonId)
                 .Index(t => t.PersonId)
                 .Index(t => t.ContractId);
             
@@ -238,6 +251,7 @@ namespace Dal.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.DealInCampaigns", "CampaignId", "dbo.Campaigns");
             DropForeignKey("dbo.People", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.PersonInDeals", "PersonId", "dbo.People");
             DropForeignKey("dbo.PersonInContracts", "PersonId", "dbo.People");
@@ -255,7 +269,7 @@ namespace Dal.Migrations
             DropForeignKey("dbo.ChatInPretensions", "ChatId", "dbo.Chats");
             DropForeignKey("dbo.PersonInDeals", "DealId", "dbo.Deals");
             DropForeignKey("dbo.DealInContracts", "DealId", "dbo.Deals");
-            DropForeignKey("dbo.Deals", "CampaignId", "dbo.Campaigns");
+            DropForeignKey("dbo.DealInCampaigns", "DealId", "dbo.Deals");
             DropForeignKey("dbo.DealInContracts", "ContractId", "dbo.Contracts");
             DropForeignKey("dbo.Contracts", "CampaignId", "dbo.Campaigns");
             DropIndex("dbo.PersonInContracts", new[] { "ContractId" });
@@ -273,8 +287,9 @@ namespace Dal.Migrations
             DropIndex("dbo.People", new[] { "RoleId" });
             DropIndex("dbo.PersonInDeals", new[] { "DealId" });
             DropIndex("dbo.PersonInDeals", new[] { "PersonId" });
+            DropIndex("dbo.DealInCampaigns", new[] { "CampaignId" });
+            DropIndex("dbo.DealInCampaigns", new[] { "DealId" });
             DropIndex("dbo.Deals", new[] { "ProductId" });
-            DropIndex("dbo.Deals", new[] { "CampaignId" });
             DropIndex("dbo.DealInContracts", new[] { "ContractId" });
             DropIndex("dbo.DealInContracts", new[] { "DealId" });
             DropIndex("dbo.Contracts", new[] { "CampaignId" });
@@ -290,6 +305,7 @@ namespace Dal.Migrations
             DropTable("dbo.PersonInChats");
             DropTable("dbo.People");
             DropTable("dbo.PersonInDeals");
+            DropTable("dbo.DealInCampaigns");
             DropTable("dbo.Deals");
             DropTable("dbo.DealInContracts");
             DropTable("dbo.Contracts");

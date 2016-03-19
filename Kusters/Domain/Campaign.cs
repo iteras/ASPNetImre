@@ -16,7 +16,7 @@ namespace Domain
        public virtual List<Contract> Contracts { get; set; }
 
        //public int DealId { get; set; }
-       public virtual List<Deal> Deals { get; set; }
+       public virtual List<DealInCampaign> DealsInCampaign { get; set; }
 
        public double Percentage { get; set; }
         [MaxLength(32)]
