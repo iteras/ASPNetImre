@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<System>
+  <Person personId ="0" >
+    <Role roleType ="admin"></Role>
+    <PersonData>
+      <UserName><![CDATA[Ompzu]]></UserName>
+      <FirstName><![CDATA[Imre]]></FirstName>
+      <LastName><![CDATA[Teras]]></LastName>
+      <PersonPosts></PersonPosts>
+    </PersonData>
+    <Posts postId ="0" category="Technology" date="20.03.2016" public="False">
+      <PostTitle><![CDATA[First posts' title]]></PostTitle>
+      <PostContent>
+        <PostPictures>
+          <Picture pictureId ="0"><![CDATA[!!!Picture not found!!!]]></Picture>    
+      </PostPictures>
+        <PostDescription><![CDATA[Lorem ipsum dolor sit amet, malesuada dictumst proin integer leo orci, phasellus vulputate arcu mauris sodales praesent, laoreet nisl sed vulputate, leo arcu euismod netus. Sodales venenatis purus tellus, leo sem ac dui vel nunc, lorem eleifend purus nullam duis, consectetuer lacus dui.]]></PostDescription>
+      </PostContent>
+    </Posts>
+  </Person>
+<Person personId ="1">
+    <Role roleType ="admin"></Role>
+    <PersonData>
+      <UserName><![CDATA[GlobalAlite]]></UserName>
+      <FirstName><![CDATA[Intzz]]></FirstName>
+      <LastName><![CDATA[Nurja]]></LastName>
+      <PersonPosts></PersonPosts>
+    </PersonData>
+    <Posts postId ="0" category="Car" date="20.03.2016" public="False">
+      <PostTitle><![CDATA[Globals First posts' title]]></PostTitle>
+      <PostContent>
+        <PostPictures>
+          <Picture pictureId ="1"><![CDATA[!!!Picture not existing!!!]]></Picture>
+          <Picture pictureId ="2"><![CDATA[!!!Picture not existing!!!]]></Picture>
+          <Picture pictureId ="3"><![CDATA[!!!Picture not existing!!!]]></Picture>
+        </PostPictures>
+        <PostDescription><![CDATA[Lorem ipsum dolor sit amet, malesuada dictumst proin integer leo orci, phasellus vulputate arcu mauris sodales praesent, laoreet nisl sed vulputate, leo arcu euismod netus. Sodales venenatis purus tellus, leo sem ac dui vel nunc, lorem eleifend purus nullam duis, consectetuer lacus dui.]]></PostDescription>
+      </PostContent>
+    </Posts>
+  </Person>
+<Person personId ="2">
+    <Role roleType ="user"></Role>
+    <PersonData>
+      <UserName><![CDATA[KoitJoome]]></UserName>
+      <FirstName><![CDATA[Marek]]></FirstName>
+      <LastName><![CDATA[Kiviking]]></LastName>
+      <PersonPosts></PersonPosts>
+    </PersonData>
+    <Posts postId ="0" category="toys" date="20.03.2016" public="False">
+      <PostTitle><![CDATA[Koits First posts' title]]></PostTitle>
+      <PostContent>
+        <PostPictures>
+          <Picture pictureId ="4"><![CDATA[!!!Picture not existing!!!]]></Picture>
+          <Picture pictureId ="5"><![CDATA[!!!Picture not existing!!!]]></Picture>
+        </PostPictures>
+        <PostDescription><![CDATA[Lorem ipsum dolor sit amet, malesuada dictumst proin integer leo orci, phasellus vulputate arcu mauris sodales praesent, laoreet nisl sed vulputate, leo arcu euismod netus. Sodales venenatis purus tellus, leo sem ac dui vel nunc, lorem eleifend purus nullam duis, consectetuer lacus dui.]]></PostDescription>
+      </PostContent>
+    </Posts>
+  </Person>
+</System>

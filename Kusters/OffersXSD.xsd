@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="System">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="Person">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Role">
+                <xs:complexType>
+                  <xs:attribute name="roleType" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="PersonData">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="UserName" type="xs:string" />
+                    <xs:element name="FirstName" type="xs:string" />
+                    <xs:element name="LastName" type="xs:string" />
+                    <xs:element name="PersonPosts" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Posts">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="PostTitle" type="xs:string" />
+                    <xs:element name="PostContent">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="PostPictures">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element maxOccurs="unbounded" name="Picture">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute name="pictureId" type="xs:unsignedByte" use="required" />
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="PostDescription" type="xs:string" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="postId" type="xs:unsignedByte" use="required" />
+                  <xs:attribute name="category" type="xs:string" use="required" />
+                  <xs:attribute name="date" type="xs:string" use="required" />
+                  <xs:attribute name="public" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="personId" type="xs:unsignedByte" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
