@@ -7,18 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class PersonsInDealController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
-
+        //private KustersDbContext db = new KustersDbContext();
+        private readonly IPersonInDealRepository _personInDealRepository = new PersonInDealRepository(new KustersDbContext());
         // GET: PersonsInDeal
         public ActionResult Index()
         {
-            return View(db.PersonInDeals.ToList());
+            return View(_personInDealRepository.All);
         }
 
         // GET: PersonsInDeal/Details/5
@@ -28,7 +30,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInDeal personInDeal = db.PersonInDeals.Find(id);
+            PersonInDeal personInDeal = _personInDealRepository.GetById(id);
             if (personInDeal == null)
             {
                 return HttpNotFound();
@@ -51,8 +53,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PersonInDeals.Add(personInDeal);
-                db.SaveChanges();
+                _personInDealRepository.Add(personInDeal);
+                _personInDealRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +68,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInDeal personInDeal = db.PersonInDeals.Find(id);
+            PersonInDeal personInDeal = _personInDealRepository.GetById(id);
             if (personInDeal == null)
             {
                 return HttpNotFound();
@@ -83,8 +85,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(personInDeal).State = EntityState.Modified;
-                db.SaveChanges();
+                _personInDealRepository.Update(personInDeal);
+                _personInDealRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(personInDeal);
@@ -97,7 +99,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInDeal personInDeal = db.PersonInDeals.Find(id);
+            PersonInDeal personInDeal = _personInDealRepository.GetById(id);
             if (personInDeal == null)
             {
                 return HttpNotFound();
@@ -110,9 +112,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PersonInDeal personInDeal = db.PersonInDeals.Find(id);
-            db.PersonInDeals.Remove(personInDeal);
-            db.SaveChanges();
+            PersonInDeal personInDeal = _personInDealRepository.GetById(id);
+            _personInDealRepository.Delete(personInDeal);
+            _personInDealRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +122,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _personInDealRepository.Dispose();
             }
             base.Dispose(disposing);
         }

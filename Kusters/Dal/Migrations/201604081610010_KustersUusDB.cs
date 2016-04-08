@@ -3,7 +3,7 @@ namespace Dal.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class KustersAddMigrations : DbMigration
+    public partial class KustersUusDB : DbMigration
     {
         public override void Up()
         {

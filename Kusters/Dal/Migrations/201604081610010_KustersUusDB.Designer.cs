@@ -7,13 +7,13 @@ namespace Dal.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class KustersAddMigrations : IMigrationMetadata
+    public sealed partial class KustersUusDB : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(KustersAddMigrations));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(KustersUusDB));
         
         string IMigrationMetadata.Id
         {
-            get { return "201603161530370_KustersAddMigrations"; }
+            get { return "201604081610010_KustersUusDB"; }
         }
         
         string IMigrationMetadata.Source

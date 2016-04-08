@@ -7,18 +7,21 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class DealsController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
+        //private KustersDbContext db = new KustersDbContext();
+        private readonly IDealRepository _dealRepository = new DealRepository(new KustersDbContext());
 
         // GET: Deals
         public ActionResult Index()
         {
-            return View(db.Deals.ToList());
+            return View(_dealRepository.All);
         }
 
         // GET: Deals/Details/5
@@ -28,7 +31,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Deal deal = db.Deals.Find(id);
+            Deal deal = _dealRepository.GetById(id);
             if (deal == null)
             {
                 return HttpNotFound();
@@ -51,8 +54,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Deals.Add(deal);
-                db.SaveChanges();
+                _dealRepository.Add(deal);
+                _dealRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +69,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Deal deal = db.Deals.Find(id);
+            Deal deal = _dealRepository.GetById(id);
             if (deal == null)
             {
                 return HttpNotFound();
@@ -83,8 +86,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(deal).State = EntityState.Modified;
-                db.SaveChanges();
+                _dealRepository.Update(deal);
+                _dealRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(deal);
@@ -97,7 +100,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Deal deal = db.Deals.Find(id);
+            Deal deal = _dealRepository.GetById(id);
             if (deal == null)
             {
                 return HttpNotFound();
@@ -110,9 +113,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Deal deal = db.Deals.Find(id);
-            db.Deals.Remove(deal);
-            db.SaveChanges();
+            Deal deal = _dealRepository.GetById(id);
+            _dealRepository.Delete(deal);
+            _dealRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +123,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _dealRepository.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -7,18 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class PersonsInPretensionController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
-
+        //private KustersDbContext db = new KustersDbContext();
+        private readonly IPersonInPretensionRepository _personInPretensionRepository = new PersonInPretensionRepository(new KustersDbContext());
         // GET: PersonsInPretension
         public ActionResult Index()
         {
-            return View(db.PersonInPretensions.ToList());
+            return View(_personInPretensionRepository.All);
         }
 
         // GET: PersonsInPretension/Details/5
@@ -28,7 +30,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInPretension personInPretension = db.PersonInPretensions.Find(id);
+            PersonInPretension personInPretension = _personInPretensionRepository.GetById(id);
             if (personInPretension == null)
             {
                 return HttpNotFound();
@@ -51,8 +53,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PersonInPretensions.Add(personInPretension);
-                db.SaveChanges();
+                _personInPretensionRepository.Add(personInPretension);
+                _personInPretensionRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +68,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInPretension personInPretension = db.PersonInPretensions.Find(id);
+            PersonInPretension personInPretension = _personInPretensionRepository.GetById(id);
             if (personInPretension == null)
             {
                 return HttpNotFound();
@@ -83,8 +85,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(personInPretension).State = EntityState.Modified;
-                db.SaveChanges();
+                _personInPretensionRepository.Update(personInPretension);
+                _personInPretensionRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(personInPretension);
@@ -97,7 +99,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInPretension personInPretension = db.PersonInPretensions.Find(id);
+            PersonInPretension personInPretension = _personInPretensionRepository.GetById(id);
             if (personInPretension == null)
             {
                 return HttpNotFound();
@@ -110,9 +112,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PersonInPretension personInPretension = db.PersonInPretensions.Find(id);
-            db.PersonInPretensions.Remove(personInPretension);
-            db.SaveChanges();
+            PersonInPretension personInPretension = _personInPretensionRepository.GetById(id);
+            _personInPretensionRepository.Delete(personInPretension);
+            _personInPretensionRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +122,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _personInPretensionRepository.Dispose();
             }
             base.Dispose(disposing);
         }

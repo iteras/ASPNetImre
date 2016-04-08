@@ -7,18 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class ContractsController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
-
+        //private KustersDbContext db = new KustersDbContext();
+        private readonly IContractRepository _contractRepository = new ContractRepository(new KustersDbContext());
         // GET: Contracts
         public ActionResult Index()
         {
-            return View(db.Contracts.ToList());
+            return View(_contractRepository.All);
         }
 
         // GET: Contracts/Details/5
@@ -28,7 +30,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contract contract = db.Contracts.Find(id);
+            Contract contract = _contractRepository.GetById(id);
             if (contract == null)
             {
                 return HttpNotFound();
@@ -51,8 +53,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Contracts.Add(contract);
-                db.SaveChanges();
+                _contractRepository.Add(contract);
+                _contractRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +68,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contract contract = db.Contracts.Find(id);
+            Contract contract = _contractRepository.GetById();
             if (contract == null)
             {
                 return HttpNotFound();
@@ -83,8 +85,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(contract).State = EntityState.Modified;
-                db.SaveChanges();
+                _contractRepository.Update(contract);
+                _contractRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(contract);
@@ -97,7 +99,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contract contract = db.Contracts.Find(id);
+            Contract contract = _contractRepository.GetById(id);
             if (contract == null)
             {
                 return HttpNotFound();
@@ -110,9 +112,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Contract contract = db.Contracts.Find(id);
-            db.Contracts.Remove(contract);
-            db.SaveChanges();
+            Contract contract = _contractRepository.GetById(id);
+            _contractRepository.Delete(contract);
+            _contractRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +122,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _contractRepository.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -7,18 +7,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class CampaignsController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
+      //  private KustersDbContext db = new KustersDbContext();
+
+        private readonly ICampaignRepository _campaignRepository = new CampaignRepository(new KustersDbContext());
 
         // GET: Campaigns
         public ActionResult Index()
         {
-            return View(db.Campaigns.ToList());
+            return View(_campaignRepository.All);
         }
 
         // GET: Campaigns/Details/5
@@ -28,7 +32,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Campaign campaign = db.Campaigns.Find(id);
+            Campaign campaign = _campaignRepository.GetById(id);
             if (campaign == null)
             {
                 return HttpNotFound();
@@ -51,8 +55,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Campaigns.Add(campaign);
-                db.SaveChanges();
+                _campaignRepository.Add(campaign);
+                _campaignRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +70,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Campaign campaign = db.Campaigns.Find(id);
+            Campaign campaign = _campaignRepository.GetById(id);
             if (campaign == null)
             {
                 return HttpNotFound();
@@ -83,8 +87,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(campaign).State = EntityState.Modified;
-                db.SaveChanges();
+                _campaignRepository.Update(campaign);
+                _campaignRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(campaign);
@@ -97,7 +101,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Campaign campaign = db.Campaigns.Find(id);
+            Campaign campaign = _campaignRepository.GetById(id);
             if (campaign == null)
             {
                 return HttpNotFound();
@@ -110,9 +114,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Campaign campaign = db.Campaigns.Find(id);
-            db.Campaigns.Remove(campaign);
-            db.SaveChanges();
+            Campaign campaign = _campaignRepository.GetById(id);
+            _campaignRepository.Delete(campaign);
+            _campaignRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +124,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _campaignRepository.Dispose();
             }
             base.Dispose(disposing);
         }

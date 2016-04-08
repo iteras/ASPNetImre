@@ -7,18 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class PretensionsController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
-
+        //private KustersDbContext db = new KustersDbContext();
+        private readonly IPretensionRepository _pretension = new  PretensionRepository(new KustersDbContext());
         // GET: Pretensions
         public ActionResult Index()
         {
-            return View(db.Pretensions.ToList());
+            return View(_pretension.All);
         }
 
         // GET: Pretensions/Details/5
@@ -28,7 +30,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pretension pretension = db.Pretensions.Find(id);
+            Pretension pretension = _pretension.GetById(id);
             if (pretension == null)
             {
                 return HttpNotFound();
@@ -51,8 +53,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Pretensions.Add(pretension);
-                db.SaveChanges();
+                _pretension.Add(pretension);
+                _pretension.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +68,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pretension pretension = db.Pretensions.Find(id);
+            Pretension pretension = _pretension.GetById(id);
             if (pretension == null)
             {
                 return HttpNotFound();
@@ -83,8 +85,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(pretension).State = EntityState.Modified;
-                db.SaveChanges();
+                _pretension.Update(pretension);
+                _pretension.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(pretension);
@@ -97,7 +99,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pretension pretension = db.Pretensions.Find(id);
+            Pretension pretension = _pretension.GetById(id);
             if (pretension == null)
             {
                 return HttpNotFound();
@@ -110,9 +112,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Pretension pretension = db.Pretensions.Find(id);
-            db.Pretensions.Remove(pretension);
-            db.SaveChanges();
+            Pretension pretension = _pretension.GetById(id);
+            _pretension.Delete(pretension);
+            _pretension.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +122,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _pretension.Dispose();
             }
             base.Dispose(disposing);
         }

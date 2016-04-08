@@ -117,7 +117,7 @@ namespace Web.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Person person = _personRepository.GetById(id);
-            _personRepository.Delete(id);
+            _personRepository.Delete(person);
             _personRepository.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -7,18 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class DescriptionsController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
-
+        //private KustersDbContext db = new KustersDbContext();
+        private readonly IDescriptionRepository _descriptionRepository = new DescriptionRepository(new KustersDbContext());
         // GET: Descriptions
         public ActionResult Index()
         {
-            return View(db.Descriptions.ToList());
+            return View(_descriptionRepository.All);
         }
 
         // GET: Descriptions/Details/5
@@ -28,7 +30,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Description description = db.Descriptions.Find(id);
+            Description description = _descriptionRepository.GetById(id);
             if (description == null)
             {
                 return HttpNotFound();
@@ -51,8 +53,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Descriptions.Add(description);
-                db.SaveChanges();
+                _descriptionRepository.Add(description);
+                _descriptionRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +68,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Description description = db.Descriptions.Find(id);
+            Description description = _descriptionRepository.GetById();
             if (description == null)
             {
                 return HttpNotFound();
@@ -83,8 +85,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(description).State = EntityState.Modified;
-                db.SaveChanges();
+                _descriptionRepository.Update(description);
+                _descriptionRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(description);
@@ -97,7 +99,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Description description = db.Descriptions.Find(id);
+            Description description = _descriptionRepository.GetById(id);
             if (description == null)
             {
                 return HttpNotFound();
@@ -110,9 +112,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Description description = db.Descriptions.Find(id);
-            db.Descriptions.Remove(description);
-            db.SaveChanges();
+            Description description = _descriptionRepository.GetById(id);
+            _descriptionRepository.Delete(description);
+            _descriptionRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +122,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _descriptionRepository.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -8,7 +8,7 @@ using Domain;
 
 namespace Dal.Interfaces
 {
-    public interface IPersonInPretension : IEFRepository<PersonInPretension>
+    public interface IPersonInPretensionRepository : IEFRepository<PersonInPretension>
     {
     }
 }

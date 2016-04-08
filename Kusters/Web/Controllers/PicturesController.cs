@@ -7,18 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class PicturesController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
-
+        //private KustersDbContext db = new KustersDbContext();
+        private readonly IPictureRepository _pictureRepository = new PictureRepository(new KustersDbContext());
         // GET: Pictures
         public ActionResult Index()
         {
-            return View(db.Pictures.ToList());
+            return View(_pictureRepository.All);
         }
 
         // GET: Pictures/Details/5
@@ -28,7 +30,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
+            Picture picture = _pictureRepository.GetById(id);
             if (picture == null)
             {
                 return HttpNotFound();
@@ -51,8 +53,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Pictures.Add(picture);
-                db.SaveChanges();
+                _pictureRepository.Add(picture);
+                _pictureRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +68,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
+            Picture picture = _pictureRepository.GetById(id);
             if (picture == null)
             {
                 return HttpNotFound();
@@ -83,8 +85,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(picture).State = EntityState.Modified;
-                db.SaveChanges();
+                _pictureRepository.Update(picture);
+                _pictureRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(picture);
@@ -97,7 +99,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
+            Picture picture = _pictureRepository.GetById(id);
             if (picture == null)
             {
                 return HttpNotFound();
@@ -110,9 +112,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Picture picture = db.Pictures.Find(id);
-            db.Pictures.Remove(picture);
-            db.SaveChanges();
+            Picture picture = _pictureRepository.GetById(id);
+            _pictureRepository.Delete(picture);
+            _pictureRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +122,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _pictureRepository.Dispose();
             }
             base.Dispose(disposing);
         }

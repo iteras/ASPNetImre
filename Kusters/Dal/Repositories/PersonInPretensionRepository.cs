@@ -11,7 +11,7 @@ using Domain;
 
 namespace Dal.Repositories
 {
-   public class PersonInPretensionRepository : EFRepository<PersonInPretension>, IPersonInPretension
+   public class PersonInPretensionRepository : EFRepository<PersonInPretension>, IPersonInPretensionRepository
     {
        public PersonInPretensionRepository(DbContext dbContext) : base(dbContext)
        {

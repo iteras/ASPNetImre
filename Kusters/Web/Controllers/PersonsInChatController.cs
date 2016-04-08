@@ -7,18 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class PersonsInChatController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
-
+        //private KustersDbContext db = new KustersDbContext();
+        private readonly IPersonInChatRepository _personInChatRepository = new PersonInChatRepository(new KustersDbContext());
         // GET: PersonsInChat
         public ActionResult Index()
         {
-            return View(db.PersonInChats.ToList());
+            return View(_personInChatRepository.All);
         }
 
         // GET: PersonsInChat/Details/5
@@ -28,7 +30,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInChat personInChat = db.PersonInChats.Find(id);
+            PersonInChat personInChat = _personInChatRepository.GetById(id);
             if (personInChat == null)
             {
                 return HttpNotFound();
@@ -51,8 +53,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PersonInChats.Add(personInChat);
-                db.SaveChanges();
+                _personInChatRepository.Add(personInChat);
+                _personInChatRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +68,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInChat personInChat = db.PersonInChats.Find(id);
+            PersonInChat personInChat = _personInChatRepository.GetById(id);
             if (personInChat == null)
             {
                 return HttpNotFound();
@@ -83,8 +85,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(personInChat).State = EntityState.Modified;
-                db.SaveChanges();
+                _personInChatRepository.Update(personInChat);
+                _personInChatRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(personInChat);
@@ -97,7 +99,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInChat personInChat = db.PersonInChats.Find(id);
+            PersonInChat personInChat = _personInChatRepository.GetById(id);
             if (personInChat == null)
             {
                 return HttpNotFound();
@@ -110,9 +112,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PersonInChat personInChat = db.PersonInChats.Find(id);
-            db.PersonInChats.Remove(personInChat);
-            db.SaveChanges();
+            PersonInChat personInChat = _personInChatRepository.GetById(id);
+            _personInChatRepository.Delete(personInChat);
+            _personInChatRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +122,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _personInChatRepository.Dispose();
             }
             base.Dispose(disposing);
         }

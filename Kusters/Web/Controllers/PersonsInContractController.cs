@@ -7,18 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Dal;
+using Dal.Interfaces;
+using Dal.Repositories;
 using Domain;
 
 namespace Web.Controllers
 {
     public class PersonsInContractController : Controller
     {
-        private KustersDbContext db = new KustersDbContext();
-
+        //private KustersDbContext db = new KustersDbContext();
+        private readonly IPersonInContractRepository _personInContractRepository = new PersonInContractRepository(new KustersDbContext());
         // GET: PersonsInContract
         public ActionResult Index()
         {
-            return View(db.PersonInContracts.ToList());
+            return View(_personInContractRepository.All);
         }
 
         // GET: PersonsInContract/Details/5
@@ -28,7 +30,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInContract personInContract = db.PersonInContracts.Find(id);
+            PersonInContract personInContract = _personInContractRepository.GetById(id);
             if (personInContract == null)
             {
                 return HttpNotFound();
@@ -51,8 +53,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PersonInContracts.Add(personInContract);
-                db.SaveChanges();
+                _personInContractRepository.Add(personInContract);
+                _personInContractRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +68,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInContract personInContract = db.PersonInContracts.Find(id);
+            PersonInContract personInContract = _personInContractRepository.GetById(id);
             if (personInContract == null)
             {
                 return HttpNotFound();
@@ -83,8 +85,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(personInContract).State = EntityState.Modified;
-                db.SaveChanges();
+                _personInContractRepository.Update(personInContract);
+                _personInContractRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(personInContract);
@@ -97,7 +99,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PersonInContract personInContract = db.PersonInContracts.Find(id);
+            PersonInContract personInContract = _personInContractRepository.GetById(id);
             if (personInContract == null)
             {
                 return HttpNotFound();
@@ -110,9 +112,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PersonInContract personInContract = db.PersonInContracts.Find(id);
-            db.PersonInContracts.Remove(personInContract);
-            db.SaveChanges();
+            PersonInContract personInContract = _personInContractRepository.GetById(id);
+            _personInContractRepository.Delete(personInContract);
+            _personInContractRepository.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +122,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _personInContractRepository.Dispose();
             }
             base.Dispose(disposing);
         }
